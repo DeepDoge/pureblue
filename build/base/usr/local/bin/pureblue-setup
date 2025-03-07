@@ -5,7 +5,7 @@
 flatpak remote-modify --system --prio=0 fedora
 flatpak remote-modify --system --prio=1 flathub
 
-flatpak uninstall org.gnome.Extensions
+flatpak uninstall -y org.gnome.Extensions
 flatpak install -y \
     it.mijorus.gearlever \
     com.usebottles.bottles \
