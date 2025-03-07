@@ -1,1 +1,3 @@
-/pureblue/install-brew.sh && /pureblue/install-flatpaks.sh
+#!/bin/bash
+
+echo "Pureblue, Post Upgrade"

@@ -1,3 +1,7 @@
+#!/bin/bash
+
+curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+
 flatpak remote-modify --system --prio=0 fedora
 flatpak remote-modify --system --prio=1 flathub
 
