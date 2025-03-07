@@ -11,5 +11,5 @@ jobs:
       - name: publish
         run: |
           podman login --username pureblue-os --password ${{ secrets.GH_PAT }} ghcr.io
-          podman build . --tag ghcr.io/pureblue-os/pureblue:latest --build-arg SETUP_SCRIPT=base
+          podman build . --tag ghcr.io/pureblue-os/pureblue:latest --build-arg BUILD=base
           podman push ghcr.io/pureblue-os/pureblue:latest

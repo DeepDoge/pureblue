@@ -1,0 +1,1 @@
+/pureblue/install-brew.sh && /pureblue/install-flatpaks.sh

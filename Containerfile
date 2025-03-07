@@ -1,10 +1,10 @@
 FROM quay.io/fedora-ostree-desktops/silverblue:41
 
-ARG SETUP_SCRIPT
-COPY /scripts /tmp/scripts
-WORKDIR /tmp/scripts
+ARG BUILD
+COPY build /pureblue
 
-RUN chmod +x ./${SETUP_SCRIPT}.sh && \
-    ./${SETUP_SCRIPT}.sh && \
+RUN set -euxo pipefail && \
+    cd /pureblue/${BUILD} && \
+    ./setup.sh && \
     rm -rf /tmp/* /var/* && \
     ostree container commit

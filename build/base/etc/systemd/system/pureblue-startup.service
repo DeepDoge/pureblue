@@ -1,0 +1,12 @@
+[Unit]
+Description=pureblue startup script.
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/pureblue/startup.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
