@@ -2,7 +2,7 @@
 Name=Pureblue Setup
 Comment=Pureblue Setup
 Exec=/usr/local/bin/pureblue-setup
-Icon=/path/to/icon.png
+Icon=utilities-terminal
 Terminal=true
 Type=Application
 StartupNotify=true
