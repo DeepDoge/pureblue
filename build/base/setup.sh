@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")"
+
 rsync -av ./etc/ /etc/
 rsync -av ./usr/ /usr/
 
