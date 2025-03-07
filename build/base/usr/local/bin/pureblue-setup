@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This needs a GUI with toggles
+# This needs a GUI with toggles, or I need a way to install these system-wide at built time.
 
 flatpak remote-modify --system --prio=0 fedora
 flatpak remote-modify --system --prio=1 flathub
@@ -10,7 +10,7 @@ flatpak install -y \
     it.mijorus.gearlever \
     com.usebottles.bottles \
     io.podman_desktop.PodmanDesktop \
-    org.gnome.Music \
-    io.github.celluloid_player.Celluloid \
+    com.github.rafostar.Clapper \
+    io.bassi.Amberol \
     io.missioncenter.MissionCenter \
     com.mattjakeman.ExtensionManager
