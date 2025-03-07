@@ -1,10 +1,10 @@
 FROM quay.io/fedora-ostree-desktops/silverblue:41
 
 ARG BUILD
-COPY build /pureblue
+COPY build /etc/pureblue
 
 RUN set -euxo pipefail && \
-    cd /pureblue/${BUILD} && \
+    cd /etc/pureblue/${BUILD} && \
     ./setup.sh && \
     rm -rf /tmp/* /var/* && \
     ostree container commit
