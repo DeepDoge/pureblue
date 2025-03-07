@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/pureblue-startup.sh
+ExecStart=/usr/local/bin/pureblue-startup
 RemainAfterExit=true
 
 [Install]
