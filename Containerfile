@@ -4,6 +4,6 @@ ARG BUILD
 COPY build /etc/pureblue
 
 RUN set -euxo pipefail && \
-    /etc/pureblue/${BUILD}/setup.sh && \
+    /etc/pureblue/${BUILD}/build.sh && \
     rm -rf /tmp/* /var/* && \
     ostree container commit

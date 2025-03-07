@@ -2,6 +2,8 @@
 
 cd "$(dirname "$0")"
 
+echo "Setup Base"
+
 rsync -av ./etc/ /etc/
 rsync -av ./usr/ /usr/
 

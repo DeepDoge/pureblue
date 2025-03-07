@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 
-echo "Setup NVIDIA"
+echo "Setup Asus"
