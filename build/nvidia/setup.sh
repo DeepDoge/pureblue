@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
-
 ../base/setup.sh
+
+cd "$(dirname "$0")"
