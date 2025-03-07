@@ -1,13 +1,16 @@
 #!/bin/bash
 
-curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+# This needs a GUI with toggles
 
 flatpak remote-modify --system --prio=0 fedora
 flatpak remote-modify --system --prio=1 flathub
 
+flatpak uninstall org.gnome.Extensions
 flatpak install -y \
     it.mijorus.gearlever \
     com.usebottles.bottles \
     io.podman_desktop.PodmanDesktop \
     org.gnome.Music \
-    io.github.celluloid_player.Celluloid
+    io.github.celluloid_player.Celluloid \
+    io.missioncenter.MissionCenter \
+    com.mattjakeman.ExtensionManager

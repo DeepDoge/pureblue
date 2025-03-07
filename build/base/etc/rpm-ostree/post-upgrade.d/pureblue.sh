@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "Pureblue, Post Upgrade"
+gtk-launch /usr/local/share/applications/pureblue-share.desktop
