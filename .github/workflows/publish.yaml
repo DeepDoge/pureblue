@@ -1,0 +1,13 @@
+name: publish
+on:
+  push
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and push the image
+        run: |
+          podman login --username pureblue-os --password ${{ secrets.GH_PAT }} ghcr.io
+          podman build . --tag ghcr.io/pureblue-os/pureblue:latest --build-arg SETUP_SCRIPT=base
+          podman push ghcr.io/pureblue-os/pureblue:latest
