@@ -14,6 +14,7 @@ rpm-ostree cleanup -m
 systemctl enable pureblue.service
 
 # I wonder if this atleast caches the installs
+flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install --system -y \
     it.mijorus.gearlever \
     com.usebottles.bottles \
