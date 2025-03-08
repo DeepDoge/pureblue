@@ -5,11 +5,11 @@ cd "$(dirname "$0")"
 echo "Setup Base"
 set -x
 
-FEDORA_VERSION=$(rpm -E %fedora)
-
 rsync -av ./usr/ /usr/
 
-./yum.sh
+FEDORA_VERSION=$(rpm -E %fedora)
+
+#./yum.sh MAKE THIS WORK IF YOU CAN. WE WANT TO KEEP /etc CLEAN
 
 rpm-ostree install --apply-live \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm \
