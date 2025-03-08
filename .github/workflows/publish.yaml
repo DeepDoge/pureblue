@@ -11,8 +11,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: publish
+      - name: Set Organization Name
+        run: echo "ORG_NAME=${{ github.repository_owner }}" >> $GITHUB_ENV
+      - name: Login to GHCR
+        run: podman login --username $ORG_NAME --password ${{ secrets.GH_PAT }} ghcr.io
+      - name: Build and Push Images
         run: |
-          podman login --username pureblue-os --password ${{ secrets.GH_PAT }} ghcr.io
-          podman build . --tag ghcr.io/pureblue-os/pureblue:latest --build-arg BUILD=base
-          podman push ghcr.io/pureblue-os/pureblue:latest
+          IMAGE_NAME="ghcr.io/$ORG_NAME/pureblue"
+          for dir in build/*/; do
+            [ -d "$dir" ] || continue  # Skip if not a directory
+            BUILD_NAME=$(basename "$dir")
+            TAGS_FILE="$dir/tags"
+            TEMP_TAG="$ORG_NAME-$BUILD_NAME"
+            
+            echo "Building image for: $BUILD_NAME"
+            podman build . --tag "$TEMP_TAG" --build-arg BUILD=$BUILD_NAME
+            
+            if [ -f "$TAGS_FILE" ]; then
+              while IFS= read -r TAG; do
+                [ -z "$TAG" ] && continue  # Skip empty lines
+                echo "Tagging image: $TAG"
+                podman tag "$TEMP_TAG" "$IMAGE_NAME:$TAG"
+                podman push "$IMAGE_NAME:$TAG"
+              done < "$TAGS_FILE"
+            fi
+          done

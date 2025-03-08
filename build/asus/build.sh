@@ -2,5 +2,5 @@
 
 cd "$(dirname "$0")"
 
-../base/build.sh
+../base/setup.sh
 ./setup.sh
