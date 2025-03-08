@@ -4,6 +4,7 @@ cd "$(dirname "$0")"
 
 echo "Setup NVIDIA"
 set -x
+set -euxo pipefail
 
 # These should be more than enough.
 rpm-ostree install --idempotent akmod-nvidia xorg-x11-drv-nvidia{,-cuda,-devel,-kmodsrc,-power,-libs} \

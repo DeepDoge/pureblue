@@ -4,6 +4,7 @@ cd "$(dirname "$0")"
 
 echo "Setup Base"
 set -x
+set -euxo pipefail
 
 rsync -av ./usr/ /usr/
 rsync -av ./etc/ /etc/
