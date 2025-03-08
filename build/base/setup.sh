@@ -9,6 +9,8 @@ FEDORA_VERSION=$(rpm -E %fedora)
 
 rsync -av ./usr/ /usr/
 
+./yum.sh
+
 rpm-ostree install --apply-live \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
