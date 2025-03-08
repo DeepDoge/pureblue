@@ -12,28 +12,42 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set Organization Name
-        run: echo "ORG_NAME=${{ github.repository_owner }}" >> $GITHUB_ENV
+        run: |
+          echo "Setting the organization name..."
+          echo "ORG_NAME=${{ github.repository_owner }}" >> $GITHUB_ENV
+          echo "Organization Name set to: ${{ github.repository_owner }}"
       - name: Login to GHCR
-        run: podman login --username $ORG_NAME --password ${{ secrets.GH_PAT }} ghcr.io
+        run: |
+          echo "Logging into GHCR..."
+          podman login --username $ORG_NAME --password ${{ secrets.GH_PAT }} ghcr.io
+          echo "Login to GHCR successful"
       - name: Build and Push Images
         run: |
+          echo "Starting build and push process..."
           for dir in build/*/; do
             [ -d "$dir" ] || continue  # Skip if not a directory
             BUILD_NAME=$(basename "$dir")
             TAGS_FILE="$dir/tags"
-            TEMP_TAG="$ORG_NAME-$BUILD_NAME"
+            TEMP_TAG="ghcr.io/$ORG_NAME/pureblue-temp-$BUILD_NAME"
             IMAGE_NAME="ghcr.io/$ORG_NAME/pureblue"
             [ "$BUILD_NAME" != "base" ] && IMAGE_NAME+="-$BUILD_NAME"
             
             echo "Building image for: $BUILD_NAME"
             podman build . --tag "$TEMP_TAG" --build-arg BUILD=$BUILD_NAME
+            echo "Build complete for: $BUILD_NAME"
             
             if [ -f "$TAGS_FILE" ]; then
-              while IFS= read -r TAG; do
+              echo "Tags file found for $BUILD_NAME. Proceeding with tagging and pushing."
+              while IFS= read -r TAG || [[ -n "$TAG" ]]; do
+                TAG=$(echo "$TAG" | xargs)  # Trim whitespace
                 [ -z "$TAG" ] && continue  # Skip empty lines
-                echo "Tagging image: $TAG"
+                echo "Tagging and pushing: $IMAGE_NAME:$TAG"
                 podman tag "$TEMP_TAG" "$IMAGE_NAME:$TAG"
                 podman push "$IMAGE_NAME:$TAG"
+                echo "Pushed: $IMAGE_NAME:$TAG"
               done < "$TAGS_FILE"
+            else
+              echo "No tags file found for $BUILD_NAME. Skipping tagging and pushing."
             fi
           done
+          echo "Build and push process completed."
