@@ -6,6 +6,7 @@ echo "Setup Base"
 set -x
 
 rsync -av ./usr/ /usr/
+rsync -av ./etc/ /etc/
 
 FEDORA_VERSION=$(rpm -E %fedora)
 
