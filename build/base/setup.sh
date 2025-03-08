@@ -22,7 +22,7 @@ rpm-ostree install \
     rpmfusion-nonfree-release-${FEDORA_VERSION}-*
 
 rpm-ostree override remove firefox firefox-langpacks
-rpm-ostree install gnome-tweaks openssl
+rpm-ostree install --idempotent  gnome-tweaks openssl
 rpm-ostree cleanup -m
 
 systemctl enable pureblue.service
