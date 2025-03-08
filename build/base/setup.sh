@@ -7,7 +7,6 @@ set -x
 
 FEDORA_VERSION=$(rpm -E %fedora)
 
-rsync -av ./etc/ /etc/
 rsync -av ./usr/ /usr/
 
 rpm-ostree install --apply-live \
