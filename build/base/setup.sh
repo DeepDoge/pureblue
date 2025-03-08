@@ -12,3 +12,13 @@ rpm-ostree install gnome-tweaks openssl
 rpm-ostree cleanup -m
 
 systemctl enable pureblue.service
+
+# I wonder if this atleast caches the installs
+flatpak install --system -y \
+    it.mijorus.gearlever \
+    com.usebottles.bottles \
+    io.podman_desktop.PodmanDesktop \
+    com.github.rafostar.Clapper \
+    io.bassi.Amberol \
+    io.missioncenter.MissionCenter \
+    com.mattjakeman.ExtensionManager

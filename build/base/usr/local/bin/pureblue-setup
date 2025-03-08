@@ -2,8 +2,8 @@
 
 # This needs a GUI with toggles, or I need a way to install these system-wide at built time.
 
-flatpak remote-modify --system --prio=0 fedora
-flatpak remote-modify --system --prio=1 flathub
+sudo flatpak remote-modify --prio=0 fedora
+sudo flatpak remote-modify --prio=1 flathub
 
 flatpak uninstall -y org.gnome.Extensions
 flatpak install -y \
