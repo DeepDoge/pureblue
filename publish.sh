@@ -59,6 +59,8 @@ build_image() {
         done < "$IMAGE_DIR/deps"
     fi
 
+    podman pull "$REMOTE_IMAGE_NAME:latest" || true
+
     echo "Building $IMAGE_NAME..."
     podman build \
         --tag "$REMOTE_IMAGE_NAME:latest" \
@@ -67,7 +69,7 @@ build_image() {
         --build-arg REMOTE_IMAGE_NAME_PREFIX=$REMOTE_IMAGE_NAME_PREFIX
 
     publish_image "$IMAGE_NAME"
-    
+
     BUILDING=( "${BUILDING[@]/$IMAGE_NAME}" )
 }
 
