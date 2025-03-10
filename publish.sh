@@ -16,20 +16,6 @@ PUBLISH=false
 
 ./chmod-x-all.sh
 
-# Parse arguments
-while [[ "$#" -gt 0 ]]; do
-    case "$1" in
-        --publish)
-            PUBLISH=true
-            shift
-            ;;
-        *)
-            echo "Unknown option: $1"
-            exit 1
-            ;;
-    esac
-done
-
 get_image_name() {
     local IMAGE_NAME="$1"
     local REMOTE_IMAGE_NAME="$REMOTE_PREFIX"
@@ -58,6 +44,7 @@ publish_image() {
     # Now TAGS is an array, loop through it
     for TAG in "${TAGS[@]}"; do
         echo "Pushing $IMAGE_NAME as $REMOTE_IMAGE_NAME:$TAG..."
+        podman tag $REMOTE_IMAGE_NAME "$REMOTE_IMAGE_NAME:$TAG"
         podman push "$REMOTE_IMAGE_NAME:$TAG"
     done
 }
@@ -83,9 +70,7 @@ build_image() {
     echo "Building $IMAGE_NAME..."
     podman build --tag "$REMOTE_IMAGE_NAME" -f "$IMAGE_DIR/Containerfile" ./build --build-arg FEDORA_VERSION=$FEDORA_VERSION
 
-    if $PUBLISH; then
-        publish_image "$IMAGE"
-    fi
+    publish_image "$IMAGE"
 
     BUILDING=( "${BUILDING[@]/$IMAGE_NAME}" )
 }
