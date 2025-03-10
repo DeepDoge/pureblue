@@ -1,4 +1,6 @@
-FROM quay.io/fedora-ostree-desktops/silverblue:41
+ARG FEDORA_VERSION
+
+FROM quay.io/fedora-ostree-desktops/silverblue:${FEDORA_VERSION}
 
 WORKDIR /tmp/pureblue-build
 COPY ./base .
