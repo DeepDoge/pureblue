@@ -33,7 +33,11 @@ done
 
 get_local_image_name() {
     local IMAGE_NAME="$1"
-    echo "${PROJECT_NAME}-local-${IMAGE_NAME}"
+    local REMOTE_IMAGE_NAME="$REMOTE_PREFIX"
+    [[ "$IMAGE_NAME" != "base" ]] && REMOTE_IMAGE_NAME+="-$IMAGE_NAME"
+    echo "$REMOTE_IMAGE_NAME"
+    # local IMAGE_NAME="$1"
+    # echo "${PROJECT_NAME}-local-${IMAGE_NAME}"
 }
 
 get_remote_image_name() {
