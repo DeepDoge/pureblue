@@ -14,8 +14,7 @@ PUBLISH=false
 
 get_image_name() {
     local IMAGE_NAME="$1"
-    local REMOTE_IMAGE_NAME="$REMOTE_IMAGE_NAME_PREFIX"
-    [[ "$IMAGE_NAME" != "base" ]] && REMOTE_IMAGE_NAME+="-$IMAGE_NAME"
+    local REMOTE_IMAGE_NAME="$REMOTE_IMAGE_NAME_PREFIX-$IMAGE_NAME"
     echo "$REMOTE_IMAGE_NAME"
 }
 
@@ -59,7 +58,7 @@ build_image() {
         done < "$IMAGE_DIR/deps"
     fi
 
-    podman pull "$REMOTE_IMAGE_NAME:latest" || true
+    # podman pull "$REMOTE_IMAGE_NAME:latest" || true
 
     echo "Building $IMAGE_NAME..."
     podman build \
