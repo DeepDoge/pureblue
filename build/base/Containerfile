@@ -6,6 +6,8 @@ FROM quay.io/fedora-ostree-desktops/silverblue:${FEDORA_VERSION}
 WORKDIR /tmp/pureblue-build
 COPY ./base .
 
+ENV FEDORA_VERSION=${FEDORA_VERSION}
+
 RUN ./setup.sh
 
 RUN rm -rf /tmp/* /var/*
