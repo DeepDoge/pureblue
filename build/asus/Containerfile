@@ -1,7 +1,7 @@
 FROM pureblue-local-base
 
 WORKDIR /tmp/pureblue-build
-COPY ./build/asus/ .
+COPY ./asus/ .
 
 RUN ./kernel.sh
 RUN ./setup.sh

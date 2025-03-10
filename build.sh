@@ -56,7 +56,7 @@ build_image() {
     fi
 
     echo "Building $IMAGE_NAME..."
-    podman build --tag "$LOCAL_IMAGE_NAME" -f "$IMAGE_DIR"/Containerfile .
+    podman build --tag "$LOCAL_IMAGE_NAME" -f "$IMAGE_DIR"/Containerfile ./build
 
     BUILDING=( "${BUILDING[@]/$IMAGE_NAME}" )
 }

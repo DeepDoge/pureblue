@@ -1,7 +1,7 @@
 FROM quay.io/fedora-ostree-desktops/silverblue:41
 
 WORKDIR /tmp/pureblue-build
-COPY ./build/base .
+COPY ./base .
 
 RUN ./setup.sh
 
