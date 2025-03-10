@@ -1,4 +1,4 @@
-FROM pureblue-local-asus
+FROM ghcr.io/pureblue-os/pureblue-asus
 
 WORKDIR /tmp/pureblue-build
 COPY ./nvidia ./nvidia

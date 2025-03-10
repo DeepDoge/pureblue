@@ -1,4 +1,4 @@
-FROM pureblue-local-base
+FROM ghcr.io/pureblue-os/pureblue
 
 WORKDIR /tmp/pureblue-build
 COPY ./asus/ .
