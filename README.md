@@ -15,3 +15,7 @@ im not invested in this enough to fix it rn.<br/>
 maybe it will fix itself.<br/>
 also i dont have time.<br/>
 so this will just sit here for now.
+
+---
+
+also i think im not layering the images right because it doesnt use cache.
