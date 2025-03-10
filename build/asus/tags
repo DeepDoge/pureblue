@@ -1,4 +1,4 @@
 #!/bin/bash
 
-latest
-$(rpm -E %fedora)
+echo "latest"
+echo $(rpm -E %fedora)
