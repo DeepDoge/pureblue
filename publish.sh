@@ -3,8 +3,7 @@
 set -e  # Exit on error
 
 REMOTE_IMAGE_NAME_PREFIX="ghcr.io/pureblue-os/pureblue"
-FEDORA_VERSION=41
-DEFAULT_IMAGE_TAGS=("latest" "$FEDORA_VERSION")
+DEFAULT_IMAGE_TAGS=("latest" "41")
 
 BUILD_DIR="build"
 BUILDING=()
@@ -64,7 +63,6 @@ build_image() {
     podman build \
         --tag "$REMOTE_IMAGE_NAME:latest" \
         -f "$IMAGE_DIR/Containerfile" ./build \
-        --build-arg FEDORA_VERSION=$FEDORA_VERSION \
         --build-arg REMOTE_IMAGE_NAME_PREFIX=$REMOTE_IMAGE_NAME_PREFIX
 
     publish_image "$IMAGE_NAME"
