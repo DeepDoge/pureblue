@@ -1,7 +1,7 @@
 ARG FEDORA_VERSION
 ARG REMOTE_IMAGE_NAME_PREFIX
 
-FROM quay.io/fedora-ostree-desktops/silverblue:${FEDORA_VERSION}
+FROM ghcr.io/ublue-os/silverblue-nvidia:${FEDORA_VERSION}
 
 WORKDIR /tmp/pureblue-build
 COPY ./base .

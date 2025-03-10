@@ -10,19 +10,10 @@ FEDORA_VERSION=$(rpm -E %fedora)
 
 rsync -av ./usr/ /usr/
 
-rpm-ostree install --apply-live \
-    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm \
-    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
-
-rpm-ostree install --apply-live \
-    rpmfusion-free-release \
-    rpmfusion-nonfree-release \
-    --uninstall \
-    rpmfusion-free-release-${FEDORA_VERSION}-* \
-    rpmfusion-nonfree-release-${FEDORA_VERSION}-*
+# Add lukenukem's repo for supergfxctl
+wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-linux/repo/fedora-${FEDORA_VERSION}/lukenukem-asus-linux-fedora-${FEDORA_VERSION}.repo -O /etc/yum.repos.d/_copr_lukenukem-asus-linux.repo
 
 rpm-ostree override remove firefox firefox-langpacks
-rpm-ostree install --idempotent gnome-tweaks openssl
-rpm-ostree cleanup -m
+rpm-ostree install --idempotent gnome-tweaks openssl supergfxctl
 
 systemctl enable pureblue.service

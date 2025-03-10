@@ -1,11 +1,12 @@
 ARG REMOTE_IMAGE_NAME_PREFIX
 
-FROM ${REMOTE_IMAGE_NAME_PREFIX}-asus:latest
+FROM ${REMOTE_IMAGE_NAME_PREFIX}:latest
 
 WORKDIR /tmp/pureblue-build
-COPY ./nvidia ./nvidia
+COPY ./asus/ .
 
-RUN ./nvidia/setup.sh
+RUN ./kernel.sh
+RUN ./setup.sh
 
 RUN rm -rf /tmp/* /var/*
 RUN ostree container commit
