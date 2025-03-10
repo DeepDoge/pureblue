@@ -1,12 +1,9 @@
-ARG FEDORA_VERSION
 ARG REMOTE_IMAGE_NAME_PREFIX
 
 FROM ${REMOTE_IMAGE_NAME_PREFIX}:latest
 
 WORKDIR /tmp/pureblue-build
 COPY ./asus/ .
-
-ENV FEDORA_VERSION=${FEDORA_VERSION}
 
 RUN ./kernel.sh
 RUN ./setup.sh

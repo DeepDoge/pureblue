@@ -6,6 +6,8 @@ echo "Setup NVIDIA"
 set -x
 set -euxo pipefail
 
+FEDORA_VERSION=$(rpm -E %fedora)
+
 # Add lukenukem's repo for supergfxctl
 wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-linux/repo/fedora-${FEDORA_VERSION}/lukenukem-asus-linux-fedora-${FEDORA_VERSION}.repo -O /etc/yum.repos.d/_copr_lukenukem-asus-linux.repo
 

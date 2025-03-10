@@ -6,6 +6,8 @@ echo "Setup Base"
 set -x
 set -euxo pipefail
 
+FEDORA_VERSION=$(rpm -E %fedora)
+
 rsync -av ./usr/ /usr/
 
 rpm-ostree install --apply-live \
