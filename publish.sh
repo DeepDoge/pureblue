@@ -70,12 +70,12 @@ build_image() {
     echo "Building $IMAGE_NAME..."
     podman build --tag "$REMOTE_IMAGE_NAME" -f "$IMAGE_DIR/Containerfile" ./build --build-arg FEDORA_VERSION=$FEDORA_VERSION
 
-    publish_image "$IMAGE"
+    publish_image "$IMAGE_NAME"
 
     BUILDING=( "${BUILDING[@]/$IMAGE_NAME}" )
 }
 
 IMAGES=($(ls -d $BUILD_DIR/*/ | xargs -n 1 basename))
-for IMAGE in "${IMAGES[@]}"; do
-    build_image "$IMAGE"
+for IMAGE_NAME in "${IMAGES[@]}"; do
+    build_image "$IMAGE_NAME"
 done
