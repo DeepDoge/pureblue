@@ -2,12 +2,18 @@
 
 # TODO: This needs a GUI with toggles, or I need a way to install these system-wide at built time. 
 # TODO: Users should be able to run this and pick what to install anytime.
-# TODO: This should also handle https://rpmfusion.org/Howto/Secure%20Boot
+# TODO: This should also handle https://rpmfusion.org/Howto/Secure%20Boot.
+# TODO: The GUI will use /usr/local/share/pureblue/suggested stuff to list suggestions
+# TODO: Also the GUI should detect if the thing is already installed or not, so untoggleing and apply should remove stuff.
+# TODO: ExtensionManager selection should select only one.
+# TODO: it should also suggest flathub as default
 
 sudo flatpak remote-modify --prio=0 fedora
 sudo flatpak remote-modify --prio=1 flathub
 
 flatpak uninstall -y org.gnome.Extensions
+flatpak install -y com.mattjakeman.ExtensionManager
+
 flatpak install -y \
     it.mijorus.gearlever \
     com.usebottles.bottles \
@@ -15,5 +21,4 @@ flatpak install -y \
     com.github.rafostar.Clapper \
     io.bassi.Amberol \
     io.missioncenter.MissionCenter \
-    com.mattjakeman.ExtensionManager
 

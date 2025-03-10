@@ -1,3 +1,23 @@
 #!/bin/bash
 
 echo "Pureblue Startup"
+
+# Directory containing the startup scripts
+STARTUP_DIR="/usr/local/share/pureblue/start"
+
+# Check if the directory exists
+if [ -d "$STARTUP_DIR" ]; then
+    # Loop through each script or file in the directory
+    for script in "$STARTUP_DIR"/*; do
+        # Check if it's an executable file
+        if [ -x "$script" ]; then
+            echo "Running $script..."
+            "$script"  # Run the script
+        else
+            echo "Skipping $script, it's not executable."
+        fi
+    done
+else
+    echo "Directory $STARTUP_DIR does not exist."
+    exit 1
+fi

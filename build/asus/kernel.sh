@@ -6,8 +6,10 @@ echo "Setup Asus Kernel"
 set -x
 set -euxo pipefail
 
-wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-linux/repo/fedora-$(rpm -E %fedora)/lukenukem-asus-linux-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_lukenukem-asus-linux.repo 
-wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-kernel/repo/fedora-$(rpm -E %fedora)/lukenukem-asus-kernel-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_lukenukem-asus-kernel.repo 
+FEDORA_VERSION=$(rpm -E %fedora)
+
+wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-linux/repo/fedora-${FEDORA_VERSION}/lukenukem-asus-linux-fedora-${FEDORA_VERSION}.repo -O /etc/yum.repos.d/_copr_lukenukem-asus-linux.repo 
+wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-kernel/repo/fedora-${FEDORA_VERSION}/lukenukem-asus-kernel-fedora-${FEDORA_VERSION}.repo -O /etc/yum.repos.d/_copr_lukenukem-asus-kernel.repo 
 
 rpm-ostree cliwrap install-to-root / 
 rpm-ostree override replace \
