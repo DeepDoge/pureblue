@@ -2,9 +2,9 @@
 
 set -e  # Exit on error
 
-REMOTE_PREFIX="ghcr.io/pureblue-os/pureblue"
+REMOTE_IMAGE_NAME_PREFIX="ghcr.io/pureblue-os/pureblue"
 FEDORA_VERSION=41
-DEFAULT_TAGS=("latest" "$FEDORA_VERSION")
+DEFAULT_IMAGE_TAGS=("latest" "$FEDORA_VERSION")
 
 BUILD_DIR="build"
 BUILDING=()
@@ -14,7 +14,7 @@ PUBLISH=false
 
 get_image_name() {
     local IMAGE_NAME="$1"
-    local REMOTE_IMAGE_NAME="$REMOTE_PREFIX"
+    local REMOTE_IMAGE_NAME="$REMOTE_IMAGE_NAME_PREFIX"
     [[ "$IMAGE_NAME" != "base" ]] && REMOTE_IMAGE_NAME+="-$IMAGE_NAME"
     echo "$REMOTE_IMAGE_NAME"
 }
@@ -24,15 +24,15 @@ publish_image() {
     local REMOTE_IMAGE_NAME="$(get_image_name "$IMAGE_NAME")"
     local IMAGE_DIR="$BUILD_DIR/$IMAGE_NAME"
     
-    TAGS=()
+    IMAGE_TAGS=()
     if [[ -f "$IMAGE_DIR/tags" ]]; then
         while IFS= read -r TAG || [[ -n "$TAG" ]]; do
-            TAGS+=("$TAG")
+            IMAGE_TAGS+=("$TAG")
         done < "$IMAGE_DIR/tags"
     fi
-    TAGS+=("${DEFAULT_TAGS[@]}")
+    IMAGE_TAGS+=("${DEFAULT_IMAGE_TAGS[@]}")
 
-    for TAG in "${TAGS[@]}"; do
+    for TAG in "${IMAGE_TAGS[@]}"; do
         echo "Pushing $IMAGE_NAME as $REMOTE_IMAGE_NAME:$TAG..."
         podman tag "$REMOTE_IMAGE_NAME:latest" "$REMOTE_IMAGE_NAME:$TAG"
         podman push "$REMOTE_IMAGE_NAME:$TAG"
@@ -60,14 +60,18 @@ build_image() {
     fi
 
     echo "Building $IMAGE_NAME..."
-    podman build --tag "$REMOTE_IMAGE_NAME:latest" -f "$IMAGE_DIR/Containerfile" ./build --build-arg FEDORA_VERSION=$FEDORA_VERSION
+    podman build \
+        --tag "$REMOTE_IMAGE_NAME:latest" \
+        -f "$IMAGE_DIR/Containerfile" ./build \
+        --build-arg FEDORA_VERSION=$FEDORA_VERSION \
+        --build-arg REMOTE_IMAGE_NAME_PREFIX=$REMOTE_IMAGE_NAME_PREFIX
 
     publish_image "$IMAGE_NAME"
     
     BUILDING=( "${BUILDING[@]/$IMAGE_NAME}" )
 }
 
-IMAGES=($(ls -d $BUILD_DIR/*/ | xargs -n 1 basename))
-for IMAGE in "${IMAGES[@]}"; do
-    build_image "$IMAGE"
+IMAGE_NAMES=($(ls -d $BUILD_DIR/*/ | xargs -n 1 basename))
+for IMAGE_NAME in "${IMAGE_NAMES[@]}"; do
+    build_image "$IMAGE_NAME"
 done
