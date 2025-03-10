@@ -5,6 +5,9 @@ set -e  # Exit on error
 PROJECT_NAME="pureblue"
 REMOTE_PREFIX="ghcr.io/pureblue-os/$PROJECT_NAME"
 
+FEDORA_VERSION=41
+DEFAULT_TAGS="latest\n$FEDORA_VERSION"
+
 BUILD_DIR="build"
 BUILDING=()
 PUBLISH=false
@@ -56,7 +59,7 @@ build_image() {
     fi
 
     echo "Building $IMAGE_NAME..."
-    podman build --tag "$LOCAL_IMAGE_NAME" -f "$IMAGE_DIR"/Containerfile ./build
+    podman build --tag "$LOCAL_IMAGE_NAME" -f "$IMAGE_DIR"/Containerfile ./build --build-arg FEDORA_VERSION=$FEDORA_VERSION
 
     BUILDING=( "${BUILDING[@]/$IMAGE_NAME}" )
 }
@@ -69,7 +72,8 @@ publish_image() {
     local IMAGE_DIR="$BUILD_DIR/$IMAGE_NAME"
     
     if [[ -f "$IMAGE_DIR/tags" ]]; then
-        TAGS=$(bash "$IMAGE_DIR/tags")
+        TAGS="$(cat "$IMAGE_DIR/tags")"
+        TAGS="${TAGS:+$TAGS$'\n'}$DEFAULT_TAGS"
         
         while IFS= read -r TAG || [[ -n "$TAG" ]]; do
             echo "Tagging and pushing $IMAGE_NAME as $REMOTE_IMAGE_NAME:$TAG..."
