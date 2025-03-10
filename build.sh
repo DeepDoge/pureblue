@@ -9,9 +9,7 @@ BUILD_DIR="build"
 BUILDING=()
 PUBLISH=false
 
-find . -type f -name "*.sh" -exec chmod +x {} \;
-find . -type f -name "*.desktop" -exec chmod +x {} \;
-find . -type f -path "*/bin/*" -exec chmod +x {} \;
+./chmod-x-all.sh
 
 # Parse arguments
 while [[ "$#" -gt 0 ]]; do
@@ -69,15 +67,18 @@ publish_image() {
     local REMOTE_IMAGE_NAME="$(get_remote_image_name "$IMAGE_NAME")"
 
     local IMAGE_DIR="$BUILD_DIR/$IMAGE_NAME"
-
+    
     if [[ -f "$IMAGE_DIR/tags" ]]; then
+        TAGS=$(bash "$IMAGE_DIR/tags")
+        
         while IFS= read -r TAG || [[ -n "$TAG" ]]; do
             echo "Tagging and pushing $IMAGE_NAME as $REMOTE_IMAGE_NAME:$TAG..."
             podman tag "$LOCAL_IMAGE_NAME" "$REMOTE_IMAGE_NAME:$TAG"
             podman push "$REMOTE_IMAGE_NAME:$TAG"
-        done < "$IMAGE_DIR/tags"
+        done <<< "$TAGS"
     fi
 }
+
 
 IMAGES=($(ls -d $BUILD_DIR/*/ | xargs -n 1 basename))
 for IMAGE in "${IMAGES[@]}"; do

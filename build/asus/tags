@@ -1,2 +1,4 @@
+#!/bin/bash
+
 latest
-41
+$(rpm -E %fedora)
