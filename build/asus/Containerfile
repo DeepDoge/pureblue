@@ -1,0 +1,10 @@
+FROM pureblue-local-base
+
+WORKDIR /tmp/pureblue-build
+COPY ./build/asus/ .
+
+RUN ./kernel.sh
+RUN ./setup.sh
+
+RUN rm -rf /tmp/* /var/*
+RUN ostree container commit

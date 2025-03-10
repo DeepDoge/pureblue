@@ -1,0 +1,9 @@
+FROM pureblue-local-base
+
+WORKDIR /tmp/pureblue-build
+COPY ./build/nvidia/ .
+
+RUN ./setup.sh
+
+RUN rm -rf /tmp/* /var/*
+RUN ostree container commit

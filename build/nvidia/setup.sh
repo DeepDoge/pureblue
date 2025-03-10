@@ -6,12 +6,12 @@ echo "Setup NVIDIA"
 set -x
 set -euxo pipefail
 
-# These should be more than enough.
-rpm-ostree install --idempotent akmod-nvidia xorg-x11-drv-nvidia{,-cuda,-devel,-kmodsrc,-power,-libs} \
-    nvidia-{container-toolkit,vaapi-driver} \
-    supergfxctl
+# Add lukenukem's repo for supergfxctl
+wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-linux/repo/fedora-$(rpm -E %fedora)/lukenukem-asus-linux-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_lukenukem-asus-linux.repo
 
-# Hope this wont be keep appending each time i rebase or update
+# These should be more than enough.
+rpm-ostree install --idempotent kmod-nvidia xorg-x11-drv-nvidia{,-cuda} supergfxctl
+
 # TODO: Ok this wont run at build time, find out what to do instead.
 # rpm-ostree kargs \
 #     --append-if-missing=rd.driver.blacklist=nouveau \

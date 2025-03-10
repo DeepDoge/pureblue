@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# TODO: This needs a GUI with toggles, or I need a way to install these system-wide at built time.
+# TODO: This needs a GUI with toggles, or I need a way to install these system-wide at built time. 
+# TODO: Users should be able to run this and pick what to install anytime.
 # TODO: This should also handle https://rpmfusion.org/Howto/Secure%20Boot
 
 sudo flatpak remote-modify --prio=0 fedora
